@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV!="production"){
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -80,20 +84,6 @@ app.use((req,res,next)=>{
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
-
-// app.get("/testListing",async (req,res)=>{
-//   let sampleListing=new Listing({
-//     title:"My New Villa",
-//     description:"By the beach",
-//     price:1200,
-//     location:"Calangute, Goa",
-//     country:"India",
-//   });
-
-//   await sampleListing.save();
-//   console.log("sample was saved");
-//   res.send("successful testing");
-// });
 
 app.all("*",(req,res,next)=>{
   next(new ExpressError(404,"Page Not Found"));
